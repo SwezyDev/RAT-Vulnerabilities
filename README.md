@@ -28,8 +28,9 @@ This repository is intended for **educational** use only — specifically revers
 </div>
 
 <p align="center">
-  -# Do you want me to add more? Contact me on Telegram
+  Do you want me to add more? Contact me on Telegram
 </p>
+
 ---
 
 ## 📚 What you'll find here
