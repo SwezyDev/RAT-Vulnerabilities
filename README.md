@@ -23,7 +23,6 @@ This repository is intended for **educational** use only — specifically revers
 | RAT | Directory |
 |--------------|--------------|
 | **XWorm**    | https://github.com/SwezyDev/RAT-Vulnerabilities/tree/main/XWorm |
-| **AsyncRAT** | Soon |
 
 </div>
 
@@ -75,7 +74,6 @@ This project is explicitly for **legitimate security research**:
 │ ├─ rce_exploit.py ➔ Run remote code execution on attacker's machine
 │ ├─ sniffer.py ➔ Sniff request from the attacker's server and decrypt the Payload
 │ └─ webcam_spoofing.py # Show a custom Picture/Video/Gif on attacker's machine
-├─ AsyncRAT/ ➔ coming soon
 ├─ LICENSE ➔ License file
 └─ README.md ➔ Read me file
 ```
