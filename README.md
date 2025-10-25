@@ -28,7 +28,7 @@ This repository is intended for **educational** use only — specifically revers
 </div>
 
 <p align="center">
-  <small>Do you want me to add more? Contact me on Telegram</small>
+  <sub>Do you want me to add more? Contact me on Telegram</sub>
 </p>
 
 ---
