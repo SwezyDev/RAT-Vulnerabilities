@@ -20,7 +20,7 @@ This repository is intended for **educational** use only — specifically revers
 
 | RAT | Directory |
 |--------------|--------------|
-| **XWorm**    | https://github.com/SwezyDev/RAT-Vulnerabilities/XWorm |
+| **XWorm**    | https://github.com/SwezyDev/RAT-Vulnerabilities/tree/main/XWorm |
 | **AsyncRAT** | Soon |
 
 ---
