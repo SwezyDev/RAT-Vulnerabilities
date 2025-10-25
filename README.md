@@ -18,7 +18,7 @@ This repository is intended for **educational** use only — specifically revers
 >
 > This repository contains analysis, annotated writeups, and *sanitized* proofs-of-concept related to vulnerabilities historically observed in Remote Administration Tools (RATs).
 >
-> **This repository is strictly for legitimate security research, defensive testing, and education.** Do **NOT** use any material here to attack systems, exfiltrate data, or otherwise cause harm. Any runnable or potentially harmful code has been intentionally sanitized or converted to non-executable examples.
+> **This repository is strictly for legitimate security research, defensive testing, and education.** Do **NOT** use any material here to attack systems, exfiltrate data, or otherwise cause harm.
 >
 > If you believe content here violates GitHub policies, or if GitHub has restricted access to this repo, please contact the maintainer so we can address the concern immediately.
 
