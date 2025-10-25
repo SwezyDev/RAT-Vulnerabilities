@@ -55,6 +55,7 @@ This project is explicitly for **legitimate security research**:
 
 ```/
 ├─ XWorm/ # XWorm specific PoCs and writeups
+│ ├─ README.md # Show a detailed version of this and description of the Scripts
 │ ├─ create_text.py # Create a text on attacker's machine
 │ ├─ flood_errors.py # Flood attacker's server with errors
 │ ├─ flood_plugin.py # Flood attacker's server with plugins
