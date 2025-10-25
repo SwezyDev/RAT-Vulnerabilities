@@ -1,6 +1,6 @@
 <h1 align="center">🐀 RAT Vulnerabilities 🐀</h1>
 
-## Features
+## Supported RATs
 
 | RAT | Directory |
 |--------------|--------------|
