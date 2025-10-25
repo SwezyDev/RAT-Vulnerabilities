@@ -10,8 +10,8 @@ import os
 
 class ReceiveUtils:
     def aes_decryptor(input_bytes, key):
-        key_hash_UWU = hashlib.md5(key.encode('utf-8')).digest() # MD5 hash of the key
-        cipher = AES.new(key_hash_UWU, AES.MODE_ECB) # AES cipher in ECB mode 
+        key_hash = hashlib.md5(key.encode('utf-8')).digest() # MD5 hash of the key
+        cipher = AES.new(key_hash, AES.MODE_ECB) # AES cipher in ECB mode 
         decrypted = cipher.decrypt(input_bytes) # Decrypt input bytes
         try:
             return unpad(decrypted, AES.block_size) # Unpad decrypted bytes
@@ -19,8 +19,8 @@ class ReceiveUtils:
             return decrypted # Return decrypted bytes even if unpadding fails
 
     def aes_encryptor(input_bytes, key):
-        key_hash_UWU = hashlib.md5(key.encode('utf-8')).digest() # MD5 hash of the key
-        cipher = AES.new(key_hash_UWU, AES.MODE_ECB) # AES cipher in ECB mode
+        key_hash = hashlib.md5(key.encode('utf-8')).digest() # MD5 hash of the key
+        cipher = AES.new(key_hash, AES.MODE_ECB) # AES cipher in ECB mode
         padded = pad(input_bytes, AES.block_size) # Pad input to block size
         return cipher.encrypt(padded) # Return encrypted bytes
 

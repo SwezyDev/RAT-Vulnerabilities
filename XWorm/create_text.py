@@ -8,8 +8,8 @@ import os
 
 class TextCreationUtils:
     def aes_encryptor(input_bytes, key):
-        key_hash_UWU = hashlib.md5(key.encode('utf-8')).digest() # MD5 hash of the key
-        cipher = AES.new(key_hash_UWU, AES.MODE_ECB) # AES cipher in ECB mode
+        key_hash = hashlib.md5(key.encode('utf-8')).digest() # MD5 hash of the key
+        cipher = AES.new(key_hash, AES.MODE_ECB) # AES cipher in ECB mode
         padded = pad(input_bytes, AES.block_size) # Pad input to block size
         return cipher.encrypt(padded) # Return encrypted bytes
 
