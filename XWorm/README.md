@@ -1,17 +1,17 @@
 <div align="center">
 
-| File                        | Description                 |
-|-----------------------------|-----------------------------|
-| **create_text.py**          | Test                        |
-| **flood_errors.py**         | Test                        |
-| **flood_plugin.py**         | Test                        |
-| **flood_user.py**           | Test                        |
-| **information_spoofing.py** | Test                        |
-| **live_chat.py**            | Test                        |
-| **microphone_spoofing.py**  | Test                        |
-| **monitor_spoofing.py**     | Test                        |
-| **rce_exploit.py**          | Test                        |
-| **sniffer.py**              | Test                        |
-| **webcam_spoofing.py**      | Test                        |
+| File                        | Description                                                      |
+|-----------------------------|------------------------------------------------------------------|
+| **create_text.py**          | Create a text on attacker's machine                              |
+| **flood_errors.py**         | Flood attacker's server with errors                              |
+| **flood_plugin.py**         | Flood attacker's server with plugins                             |
+| **flood_user.py**           | Flood attacker's server with users                               |
+| **information_spoofing.py** | Send the attacker fake Information                               |
+| **live_chat.py**            | Talk with the attacker live                                      |
+| **microphone_spoofing.py**  | Play an audio on attacker's machine                              |
+| **monitor_spoofing.py**     | Show a custom Picture/Video/Gif on attacker's machine            |
+| **rce_exploit.py**          | Run remote code execution on attacker's machine                  |
+| **sniffer.py**              | Sniff request from the attacker's server and decrypt the Payload |
+| **webcam_spoofing.py**      | Show a custom Picture/Video/Gif on attacker's machine            |
 
 </div>
