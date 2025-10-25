@@ -11,7 +11,7 @@ import cv2
 import io
 import os
 
-class MonitorSpoofingUtils:
+class CamSpoofingUtils:
     def aes_encryptor(input_bytes, key):
         key_hash = hashlib.md5(key.encode('utf-8')).digest() # MD5 hash of the key
         cipher = AES.new(key_hash, AES.MODE_ECB) # AES cipher in ECB mode
@@ -19,7 +19,7 @@ class MonitorSpoofingUtils:
         return cipher.encrypt(padded) # Return encrypted bytes
 
     def send_encrypted(sock, text: str, key: str): 
-        encrypted = MonitorSpoofingUtils.aes_encryptor(text.encode(), key) # Encrypt the text
+        encrypted = CamSpoofingUtils.aes_encryptor(text.encode(), key) # Encrypt the text
         header = (str(len(encrypted)) + "\0").encode() # Create header with length
         sock.sendall(header + encrypted) # Send header and encrypted data
 
@@ -33,7 +33,7 @@ class MonitorSpoofingUtils:
             return memory_stream.getvalue() # Return compressed bytes
 
 
-class MonitorSpoofing:
+class CamSpoofing:
     SPL_XCLIENT = "<Xwormmm>"
 
     @staticmethod
@@ -41,7 +41,7 @@ class MonitorSpoofing:
         host = input("Host > ") # Get target host
         port = input("Port > ") # Get target port
         key = input("Key > ") # Get encryption key
-        sock = MonitorSpoofing.connection(host, port) # Connect to target
+        sock = CamSpoofing.connection(host, port) # Connect to target
         image_path = input("Image/Video/Gif file path > ").strip().strip('"') # Get image file path
 
         allowed_exts = (
@@ -54,7 +54,7 @@ class MonitorSpoofing:
 
         image_path = os.path.normpath(image_path) # Normalize path
 
-        MonitorSpoofing.trigger(sock, key, image_path) # Trigger the Microphone
+        CamSpoofing.trigger(sock, key, image_path) # Trigger the Microphone
 
 
     def connection(host, port):
@@ -69,8 +69,8 @@ class MonitorSpoofing:
 
     def trigger(sock, key, image):
         try:
-            payload =  f"WBCM{MonitorSpoofing.SPL_XCLIENT}Cam Name{MonitorSpoofing.SPL_XCLIENT}ClientID" 
-            MonitorSpoofingUtils.send_encrypted(sock, payload, key) # Send encrypted message
+            payload =  f"WBCM{CamSpoofing.SPL_XCLIENT}Cam Name{CamSpoofing.SPL_XCLIENT}ClientID" 
+            CamSpoofingUtils.send_encrypted(sock, payload, key) # Send encrypted message
 
             if image.lower().endswith(('.mp4', '.avi', '.mov', '.mkv')): # Video file handling
                 cap = cv2.VideoCapture(image) # Open video file
@@ -87,12 +87,12 @@ class MonitorSpoofing:
 
                     frame = cv2.resize(frame, (256, 156)) # Resize frame
                     _, buffer = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 90]) # Encode frame as JPEG
-                    compressed = MonitorSpoofingUtils.compress(buffer.tobytes()) # Compress frame
+                    compressed = CamSpoofingUtils.compress(buffer.tobytes()) # Compress frame
                     encoded_frame = base64.b64encode(compressed).decode("utf-8") # Base64 encode frame
                     
-                    payload = f"Cam{MonitorSpoofing.SPL_XCLIENT}{encoded_frame}{MonitorSpoofing.SPL_XCLIENT}ClientID"
+                    payload = f"Cam{CamSpoofing.SPL_XCLIENT}{encoded_frame}{CamSpoofing.SPL_XCLIENT}ClientID"
                     
-                    MonitorSpoofingUtils.send_encrypted(sock, payload, key) # Send encrypted video frame
+                    CamSpoofingUtils.send_encrypted(sock, payload, key) # Send encrypted video frame
 
                     print("Video frame sent.")
 
@@ -110,12 +110,12 @@ class MonitorSpoofing:
 
                             memory_stream = io.BytesIO() # Create memory stream
                             frame.save(memory_stream, format="JPEG", quality=90) # Save frame as JPEG
-                            compressed = MonitorSpoofingUtils.compress(memory_stream.getvalue()) # Compress frame
+                            compressed = CamSpoofingUtils.compress(memory_stream.getvalue()) # Compress frame
                             encoded_image = base64.b64encode(compressed).decode("utf-8") # Encode to Base64
 
-                            payload = f"Cam{MonitorSpoofing.SPL_XCLIENT}{encoded_image}{MonitorSpoofing.SPL_XCLIENT}ClientID"
+                            payload = f"Cam{CamSpoofing.SPL_XCLIENT}{encoded_image}{CamSpoofing.SPL_XCLIENT}ClientID"
 
-                            MonitorSpoofingUtils.send_encrypted(sock, payload, key) # Send encrypted GIF frame
+                            CamSpoofingUtils.send_encrypted(sock, payload, key) # Send encrypted GIF frame
                             print("GIF frame sent.")
 
                             delay = image.info.get('duration', 100) / 1000.0 # Frame delay in seconds
@@ -127,18 +127,18 @@ class MonitorSpoofing:
                     resized = image.resize((256, 156)) # Resize image
                     memory_stream = io.BytesIO() # Create memory stream
                     resized.save(memory_stream, format="JPEG", quality=90) # Save image as JPEG
-                    compressed = MonitorSpoofingUtils.compress(memory_stream.getvalue()) # Compress image
+                    compressed = CamSpoofingUtils.compress(memory_stream.getvalue()) # Compress image
                     encoded_image = base64.b64encode(compressed).decode("utf-8") # Encode to Base64
 
-                    payload = f"Cam{MonitorSpoofing.SPL_XCLIENT}{encoded_image}{MonitorSpoofing.SPL_XCLIENT}ClientID"
+                    payload = f"Cam{CamSpoofing.SPL_XCLIENT}{encoded_image}{CamSpoofing.SPL_XCLIENT}ClientID"
 
                     print("Image sent.") 
                     
                     while True:
-                        MonitorSpoofingUtils.send_encrypted(sock, payload, key) # Send encrypted image
+                        CamSpoofingUtils.send_encrypted(sock, payload, key) # Send encrypted image
 
         except Exception as e:
             print(f"Failed to send message: {e}")
 
 if __name__ == "__main__":
-    MonitorSpoofing.main()
+    CamSpoofing.main()
