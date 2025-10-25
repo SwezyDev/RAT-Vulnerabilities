@@ -1,2 +1,8 @@
-# RAT-Vulnerabilities
-A collection of exploit examples and PoCs inspired by vulnerabilities seen in RATs, for educational reverse‑engineering and exploit development.
+<h1 align="center">🐀 RAT Vulnerabilities 🐀</h1>
+
+## Features
+
+| RAT | Directory |
+|--------------|--------------|
+| **XWorm**    | https://github.com/SwezyDev/RAT-Vulnerabilities/XWorm |
+| **AsyncRAT** | Soon |
