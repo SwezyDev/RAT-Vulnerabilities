@@ -18,10 +18,14 @@ This repository is intended for **educational** use only — specifically revers
 
 ## ⭐ Supported RATs
 
+<div align="center">
+
 | RAT | Directory |
 |--------------|--------------|
 | **XWorm**    | https://github.com/SwezyDev/RAT-Vulnerabilities/tree/main/XWorm |
 | **AsyncRAT** | Soon |
+
+</div>
 
 ---
 
