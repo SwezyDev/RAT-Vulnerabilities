@@ -6,7 +6,6 @@
 </p>
 
 ## ⭐ Supported RATs
-
 | RAT | Directory |
 |--------------|--------------|
 | **XWorm**    | https://github.com/SwezyDev/RAT-Vulnerabilities/XWorm |
