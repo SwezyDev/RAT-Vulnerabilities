@@ -13,6 +13,7 @@
 This repository is intended for **educational** use only — specifically reverse‑engineering, vulnerability research, defensive testing, and exploit‑development learning in controlled environments.
 
 > ⚠️ This repository **does not** promote or support malicious activity. Use responsibly and legally.
+> 
 > **IMPORTANT — EDUCATIONAL / RESEARCH ONLY**
 >
 > This repository contains analysis, annotated writeups, and *sanitized* proofs-of-concept related to vulnerabilities historically observed in Remote Administration Tools (RATs).
