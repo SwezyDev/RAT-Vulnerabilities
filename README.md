@@ -13,7 +13,7 @@
 This repository is intended for **educational** use only — specifically reverse‑engineering, vulnerability research, defensive testing, and exploit‑development learning in controlled environments.
 
 > [!CAUTION]
-> ⚠️ This repository **does not** promote or support malicious activity. Use responsibly and legally.
+> This repository **does not** promote or support malicious activity. Use responsibly and legally.
 > 
 > **IMPORTANT — EDUCATIONAL / RESEARCH ONLY**
 >
