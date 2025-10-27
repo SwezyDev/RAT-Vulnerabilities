@@ -12,6 +12,7 @@
 **RAT Vulnerabilities** is a curated collection of *exploit examples* and *proofs‑of‑concept (PoCs)* inspired by vulnerabilities observed in Remote Administration Tools (RATs).  
 This repository is intended for **educational** use only — specifically reverse‑engineering, vulnerability research, defensive testing, and exploit‑development learning in controlled environments.
 
+> [!CAUTION]
 > ⚠️ This repository **does not** promote or support malicious activity. Use responsibly and legally.
 > 
 > **IMPORTANT — EDUCATIONAL / RESEARCH ONLY**
