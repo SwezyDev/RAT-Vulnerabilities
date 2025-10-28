@@ -103,10 +103,8 @@ class DecryptPayloadUtils:
 
         return results # Return the decrypted results
 
-
-
 class DecryptPayload:
-    
+
     @staticmethod
     def main():
         exe_path = sys.argv[1] if len(sys.argv) > 1 else None # Get path from command line argument

