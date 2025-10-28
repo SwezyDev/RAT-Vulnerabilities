@@ -124,4 +124,4 @@ class DecryptPayload:
         
 
 if __name__ == "__main__":
-    DecryptPayload.main()
+    DecryptPayload.main() # Run the main function

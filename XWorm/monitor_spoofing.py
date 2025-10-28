@@ -146,4 +146,4 @@ class MonitorSpoofing:
             print(f"Failed to send message: {e}")
 
 if __name__ == "__main__":
-    MonitorSpoofing.main()
+    MonitorSpoofing.main() # Run the main function

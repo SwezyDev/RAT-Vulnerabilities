@@ -112,4 +112,4 @@ class TextCreation:
             print(f"Failed to send message: {e}")
 
 if __name__ == "__main__":
-    TextCreation.main()
+    TextCreation.main() # Run the main function

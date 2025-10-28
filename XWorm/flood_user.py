@@ -66,4 +66,4 @@ class FloodUser:
             print(f"Failed to send message: {e}")
 
 if __name__ == "__main__":
-    FloodUser.main()
+    FloodUser.main() # Run the main function

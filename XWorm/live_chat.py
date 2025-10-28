@@ -55,4 +55,4 @@ class LiveChat:
             print(f"Failed to send message: {e}")
 
 if __name__ == "__main__":
-    LiveChat.main()
+    LiveChat.main() # Run the main function

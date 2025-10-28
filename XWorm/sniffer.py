@@ -217,4 +217,4 @@ class Receive:
                 break
 
 if __name__ == "__main__":
-    Receive.main()
+    Receive.main() # Run the main function

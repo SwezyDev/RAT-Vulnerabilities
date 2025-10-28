@@ -108,4 +108,4 @@ class MicSpoofing:
             print(f"Failed to send message: {e}")
 
 if __name__ == "__main__":
-    MicSpoofing.main()
+    MicSpoofing.main() # Run the main function
