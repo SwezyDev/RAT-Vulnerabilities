@@ -10,6 +10,7 @@
 | File                        | Description                                                      | Developer |
 |-----------------------------|------------------------------------------------------------------|------------------------------------------|
 | **create_text.py**          | Create a text on attacker's machine                              | [@SwezyDev](https://github.com/SwezyDev) |
+| **decrypt_payload.py**      | Get all Information about the Client                             | [@SwezyDev](https://github.com/SwezyDev) |
 | **flood_errors.py**         | Flood attacker's server with errors                              | [@SwezyDev](https://github.com/SwezyDev) |
 | **flood_plugin.py**         | Flood attacker's server with plugins                             | [@SwezyDev](https://github.com/SwezyDev) |
 | **flood_user.py**           | Flood attacker's server with users                               | [@SwezyDev](https://github.com/SwezyDev) |
