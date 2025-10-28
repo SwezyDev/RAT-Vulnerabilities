@@ -15,7 +15,8 @@
 | **flood_plugin.py**         | Flood attacker's server with plugins                             | [@SwezyDev](https://github.com/SwezyDev) |
 | **flood_user.py**           | Flood attacker's server with users                               | [@SwezyDev](https://github.com/SwezyDev) |
 | **information_spoofing.py** | Send the attacker fake Information                               | [@SwezyDev](https://github.com/SwezyDev) |
-| **live_chat.py**            | Talk with the attacker live                                      | [@SwezyDev](https://github.com/SwezyDev) |
+| **live_chat.py**            | Talk with the attacker live (sender only)                        | [@SwezyDev](https://github.com/SwezyDev) |
+| **live_chat_v2.py**         | Talk with the attacker live (send and receiver)                  | [@SwezyDev](https://github.com/SwezyDev) |
 | **microphone_spoofing.py**  | Play an audio on attacker's machine                              | [@SwezyDev](https://github.com/SwezyDev) |
 | **monitor_spoofing.py**     | Show a custom Picture/Video/Gif on attacker's machine            | [@SwezyDev](https://github.com/SwezyDev) |
 | **rce_exploit.py**          | Run remote code execution on attacker's machine                  | [@SwezyDev](https://github.com/SwezyDev) |
