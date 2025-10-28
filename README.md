@@ -84,8 +84,8 @@ This project is explicitly for **legitimate security research**:
 │ ├─ live_chat_v2.py ➔ Talk with the attacker live (send and receiver)
 │ ├─ microphone_spoofing.py ➔ Play an audio on attacker's machine
 │ ├─ monitor_spoofing.py ➔ Show a custom Picture/Video/Gif on attacker's machine
-│ ├─ reverse_shell.py ➔ Launch a remote shell on attacker's machine
 │ ├─ rce_exploit.py ➔ Run remote code execution on attacker's machine
+│ ├─ reverse_shell.py ➔ Launch a remote shell on attacker's machine
 │ ├─ sniffer.py ➔ Sniff request from the attacker's server and decrypt the Payload
 │ └─ webcam_spoofing.py # Show a custom Picture/Video/Gif on attacker's machine
 ├─ LICENSE ➔ License file
