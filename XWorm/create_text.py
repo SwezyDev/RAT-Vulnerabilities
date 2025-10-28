@@ -19,7 +19,7 @@ class TextCreationUtils:
         sock.sendall(header + encrypted) # Send header and encrypted data
 
 class TextCreation:
-    SPL_XCLIENT = "<Xwormmm>"
+    SPL_XCLIENT = "<Xwormmm>" # Separator constant, used in all XWorm Versions as far as i know
     ASCII_ART = '''
                                            .""--.._
                                            []      `'--.._
@@ -59,7 +59,7 @@ class TextCreation:
   /`                          \            ||
 /`                            |            ||
 `-.___,-.      .-.        ___,'            ||
-         `---'`   `'----'`'''
+         `---'`   `'----'`''' # Ascii Art, you can change it to whatever you want
 
 
     @staticmethod

@@ -34,7 +34,7 @@ class MicSpoofingUtils:
 
 
 class MicSpoofing:
-    SPL_XCLIENT = "<Xwormmm>"
+    SPL_XCLIENT = "<Xwormmm>" # Separator constant, used in all XWorm Versions as far as i know
 
     @staticmethod
     def main():

@@ -145,7 +145,7 @@ class ReceiveUtils:
         return random.choice(rndm_groub) # Return random group
 
 class Receive:
-    SPL_XCLIENT = "<Xwormmm>"
+    SPL_XCLIENT = "<Xwormmm>" # Separator constant, used in all XWorm Versions as far as i know
 
     @staticmethod
     def main():

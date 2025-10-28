@@ -106,8 +106,7 @@ class DecryptPayloadUtils:
 
 
 class DecryptPayload:
-    SPL_XCLIENT = "<Xwormmm>"
-
+    
     @staticmethod
     def main():
         exe_path = sys.argv[1] if len(sys.argv) > 1 else None # Get path from command line argument
