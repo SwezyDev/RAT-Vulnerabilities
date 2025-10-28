@@ -24,8 +24,8 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Desktop (please complete the following information):**
- - OS: [e.g. Windows 11 25h2, Linux, ...]
- - Python Version: [e.g Python 3.9]
+ - OS: [e.g. Windows 11 25h2, Arch Linux, ...]
+ - Python Version: [e.g Python 3.9, Python 3.11, ...]
  - File: [e.g create_text.py, flood_user.py, sniffer.py, ...]
 
 **Additional context**
