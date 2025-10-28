@@ -7,18 +7,18 @@
 
 <div align="center">
 
-| File                        | Description                                                      |
-|-----------------------------|------------------------------------------------------------------|
-| **create_text.py**          | Create a text on attacker's machine                              |
-| **flood_errors.py**         | Flood attacker's server with errors                              |
-| **flood_plugin.py**         | Flood attacker's server with plugins                             |
-| **flood_user.py**           | Flood attacker's server with users                               |
-| **information_spoofing.py** | Send the attacker fake Information                               |
-| **live_chat.py**            | Talk with the attacker live                                      |
-| **microphone_spoofing.py**  | Play an audio on attacker's machine                              |
-| **monitor_spoofing.py**     | Show a custom Picture/Video/Gif on attacker's machine            |
-| **rce_exploit.py**          | Run remote code execution on attacker's machine                  |
-| **sniffer.py**              | Sniff request from the attacker's server and decrypt the Payload |
-| **webcam_spoofing.py**      | Show a custom Picture/Video/Gif on attacker's machine            |
+| File                        | Description                                                      | Developer |
+|-----------------------------|------------------------------------------------------------------|------------------------------------------|
+| **create_text.py**          | Create a text on attacker's machine                              | [@SwezyDev](https://github.com/SwezyDev) |
+| **flood_errors.py**         | Flood attacker's server with errors                              | [@SwezyDev](https://github.com/SwezyDev) |
+| **flood_plugin.py**         | Flood attacker's server with plugins                             | [@SwezyDev](https://github.com/SwezyDev) |
+| **flood_user.py**           | Flood attacker's server with users                               | [@SwezyDev](https://github.com/SwezyDev) |
+| **information_spoofing.py** | Send the attacker fake Information                               | [@SwezyDev](https://github.com/SwezyDev) |
+| **live_chat.py**            | Talk with the attacker live                                      | [@SwezyDev](https://github.com/SwezyDev) |
+| **microphone_spoofing.py**  | Play an audio on attacker's machine                              | [@SwezyDev](https://github.com/SwezyDev) |
+| **monitor_spoofing.py**     | Show a custom Picture/Video/Gif on attacker's machine            | [@SwezyDev](https://github.com/SwezyDev) |
+| **rce_exploit.py**          | Run remote code execution on attacker's machine                  | [@SwezyDev](https://github.com/SwezyDev) |
+| **sniffer.py**              | Sniff request from the attacker's server and decrypt the Payload | [@SwezyDev](https://github.com/SwezyDev) |
+| **webcam_spoofing.py**      | Show a custom Picture/Video/Gif on attacker's machine            | [@SwezyDev](https://github.com/SwezyDev) |
 
 </div>
