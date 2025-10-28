@@ -1,7 +1,7 @@
 <h1 align="center">🐀 RAT Vulnerabilities 🐀</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Language-Python-blue?style=for-the-badge" />
+  <a href="https://www.python.org" target="_blank"><img src="https://img.shields.io/badge/Language-Python-blue?style=for-the-badge&logo=python" /></a>
   <a href="https://t.me/swezy" target="_blank"><img src="https://img.shields.io/badge/Telegram-@Swezy-blue?style=for-the-badge&logo=telegram" /></a>
   <br>
   <code>Leave a ⭐ if you like this Repository</code>
