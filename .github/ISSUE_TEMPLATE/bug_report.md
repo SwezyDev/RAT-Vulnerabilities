@@ -27,7 +27,7 @@ If applicable, add screenshots to help explain your problem.
  - OS: [e.g. Windows 11 25h2, Arch Linux, ...]
  - Python Version: [e.g. Python 3.9, Python 3.11, ...]
  - File: [e.g. create_text.py, flood_user.py, sniffer.py, ...]
- - RAT Version: [e.g. XWorm v5.2, XWorm v6.4, ...]
+ - RAT Version (if known): [e.g. XWorm v5.2, XWorm v6.4, ...]
 
 **Additional context**
 Add any other context about the problem here.
