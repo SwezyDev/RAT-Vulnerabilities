@@ -2,12 +2,12 @@ from Crypto.Util.Padding import unpad
 from Crypto.Cipher import AES
 import hashlib
 import base64
-import System
 import time
 import json
 import clr
 import sys
 
+import System
 clr.AddReference("System") # Add reference to System assembly
 clr.AddReference("mscorlib") # Add reference to mscorlib assembly
 
