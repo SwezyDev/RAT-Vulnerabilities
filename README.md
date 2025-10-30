@@ -72,6 +72,10 @@ This project is explicitly for **legitimate security research**:
 ## 📝 Repository structure 
 
 ```/
+├─ .github/ ➔ Contains GitHub issue templates
+│ └─ ISSUE_TEMPLATE/ ➔  GitHub issue templates
+│   ├─ bug_report.md ➔ For reporting bugs
+│   └─ feature_request.md ➔ For suggesting new features
 ├─ XWorm/ ➔ XWorm specific PoCs and writeups
 │ ├─ README.md ➔ Show a detailed version of this and description of the Scripts
 │ ├─ create_text.py ➔ Create a text on attacker's machine
