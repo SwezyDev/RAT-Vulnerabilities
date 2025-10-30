@@ -35,10 +35,17 @@ class ReceiveUtils:
 
     def decompress(input_bytes: bytes) -> bytes:
         with io.BytesIO(input_bytes) as memory_stream: # Create memory stream
-            original_len = int.from_bytes(memory_stream.read(4), "little") # Read original length
+            # note: original code read 4 bytes length then used gzip; keep behaviour
+            try:
+                original_len = int.from_bytes(memory_stream.read(4), "little") # Read original length
+            except Exception:
+                original_len = None
 
             with gzip.GzipFile(fileobj=memory_stream, mode="rb") as gzip_file: # Create gzip file
-                decompressed_data = gzip_file.read(original_len) # Read decompressed data
+                if original_len:
+                    decompressed_data = gzip_file.read(original_len) # Read decompressed data
+                else:
+                    decompressed_data = gzip_file.read()
 
             return decompressed_data # Return decompressed bytes
 
@@ -138,7 +145,7 @@ class ReceiveUtils:
             "League of Legends", "Google Drive", "Dropbox", "Reddit", "Facebook", 
             "Twitter", "Instagram", "Visual Studio Code", "Visual Studio", "Python",
             "PayPal", "US Bank", "Development Builder", "Vencord", "Swezy", "PornHub",
-            "XXX", "YouPorn", "XHamster", "Watch Free Porn" # lmao
+            "XXX", "YouPorn", "XHamster", "Watch Free Porn"
         ]
         return random.choice(window_titles) # Return random window title
 
@@ -208,85 +215,102 @@ class Receive:
             print(f"Connection failed: {e}")
             os._exit(0) # Exit on failure
 
-    def receive(sock, key, dump):
+    def receive(sock, enc_key, dump):
         buffer = b"" # Initialize empty buffer
         while True:
             try:
                 while b"\0" not in buffer: # Read until null byte
-                    buffer += sock.recv(1) # Receive one byte at a time
+                    chunk = sock.recv(4096)
+                    if not chunk:
+                        raise ConnectionError("Socket closed")
+                    buffer += chunk
                 header, buffer = buffer.split(b"\0", 1) # Split at null byte
                 length = int(header.decode()) # Get length of incoming data
 
                 while len(buffer) < length: # Read until full payload is received
-                    buffer += sock.recv(length - len(buffer)) # Receive remaining bytes
+                    chunk = sock.recv(length - len(buffer))
+                    if not chunk:
+                        raise ConnectionError("Socket closed while reading payload") # Check for closed socket
+                    buffer += chunk
                 encrypted_payload = buffer[:length] # Extract the payload
                 buffer = buffer[length:] # Update buffer
 
-                decrypted = ReceiveUtils.aes_decryptor(encrypted_payload, key).decode(errors="ignore") # Decrypt the payload
+                try:
+                    decrypted = ReceiveUtils.aes_decryptor(encrypted_payload, enc_key).decode(errors="ignore") # Decrypt the payload
+                except Exception as e:
+                    print(f"Decryption failed: {e}")
+                    continue
 
                 if decrypted.startswith(f"plugin{Receive.SPL_XCLIENT}"): # Handle plugin data
                     plugin_data = decrypted.split(Receive.SPL_XCLIENT, 1)[-1] # Extract plugin data
-                    ReceiveUtils.send_encrypted(sock, f"sendPlugin{Receive.SPL_XCLIENT}{plugin_data}", key) # Acknowledge plugin receipt
+                    ReceiveUtils.send_encrypted(sock, f"sendPlugin{Receive.SPL_XCLIENT}{plugin_data}", enc_key) # Acknowledge plugin receipt
                 
                 print(f"Received: {decrypted}") # Print the decrypted message
 
                 if dump == "y": # If dumping is enabled
                     if decrypted.startswith(f"savePlugin{Receive.SPL_XCLIENT}"): # Handle save plugin command
                         plugin_info = decrypted.split(Receive.SPL_XCLIENT, 2) # Split the command
-                        if len(plugin_info) >= 3:
-                            plugin_tempname = f"plugin_{random.randint(1000,9999)}.dll" # Create unique plugin name
-                            b64_payload = plugin_info[2]
+                        if len(plugin_info) < 3:
+                            continue # Skip if not enough parts
 
+                        plugin_tempname = f"plugin_{random.randint(1000,9999)}.dll" # Create unique plugin name
+                        b64_payload = plugin_info[2]
+
+                        try:
+                            raw = base64.b64decode(b64_payload, validate=True) # Try to decode Base64
+                        except Exception as e: 
+                            print(f"Base64 decode failed: {e}")
                             try:
-                                raw = base64.b64decode(b64_payload, validate=True) # Try to decode Base64
-                            except Exception as e: 
-                                print(f"Base64 decode failed: {e}")
-                                try:
-                                    raw = base64.b64decode(b64_payload + "===") # Try to fix padding and decode
-                                except Exception as e:
-                                    print(f"Base64 decode with padding failed: {e}")
-                                    return # Exit if decoding fails
-                                
+                                raw = base64.b64decode(b64_payload + "===") # Try to fix padding and decode
+                            except Exception as e:
+                                print(f"Base64 decode with padding failed: {e}")
+                                continue # skip this plugin, keep receiver alive
+                            
+                        try:
                             decompressed = ReceiveUtils.decompress(raw) # Decompress the data
+                        except Exception as e:
+                            decompressed = raw # Use raw data if decompression fails
 
-                            with open(plugin_tempname, "wb") as f: # Save the plugin
-                                f.write(decompressed) # Write to file
+                        with open(plugin_tempname, "wb") as f: # Save the plugin
+                            f.write(decompressed) # Write to file
 
-                            pe_name = None # Initialize pe name
-                            try:
-                                pe = pefile.PE(plugin_tempname) # Parse PE file
-                                if hasattr(pe, 'FileInfo') and pe.FileInfo: # Check for FileInfo
-                                    stack = list(pe.FileInfo) # Initialize stack
-                                    while stack: # Traverse FileInfo
-                                        item = stack.pop() # Pop item from stack
-                                        if isinstance(item, (list, tuple)): # If item is a list or tuple
-                                            stack.extend(item) # Extend stack
-                                            continue # Continue to next iteration
-                                        key = getattr(item, 'Key', None) # Get Key attribute
-                                        if key and ReceiveUtils.decode_key(key) == 'StringFileInfo': # Check for StringFileInfo
-                                            for st in getattr(item, 'StringTable', []) or []: # Iterate over StringTable
-                                                entries = getattr(st, 'entries', {}) or {} # Get entries
-                                                for key, value in entries.items(): # Iterate over entries
-                                                    if ReceiveUtils.decode_key(key) == 'OriginalFilename': # Check for OriginalFilename
-                                                        pe_name = value.decode(errors="ignore") if isinstance(value, bytes) else value # Decode value
-                                                        break
-                                                if pe_name: 
+                        pe_name = None # Initialize pe name
+                        try:
+                            pe = pefile.PE(plugin_tempname) # Parse PE file
+                            if hasattr(pe, 'FileInfo') and pe.FileInfo: # Check for FileInfo
+                                stack = list(pe.FileInfo) # Initialize stack
+                                while stack: # Traverse FileInfo
+                                    item = stack.pop() # Pop item from stack
+                                    if isinstance(item, (list, tuple)): # If item is a list or tuple
+                                        stack.extend(item) # Extend stack
+                                        continue # Continue to next iteration
+                                    key_obj = getattr(item, 'Key', None) # Get Key attribute
+                                    if key_obj and ReceiveUtils.decode_key(key_obj) == 'StringFileInfo': # Check for StringFileInfo
+                                        for st in getattr(item, 'StringTable', []) or []: # Iterate over StringTable
+                                            entries = getattr(st, 'entries', {}) or {} # Get entries
+                                            for entry_key, entry_value in entries.items(): # Iterate over entries
+                                                if ReceiveUtils.decode_key(entry_key) == 'OriginalFilename': # Check for OriginalFilename
+                                                    pe_name = entry_value.decode(errors="ignore") if isinstance(entry_value, bytes) else entry_value # Decode value
                                                     break
-                                        if pe_name:
-                                            break
-                                pe.close()
-                            except Exception:
-                                pass # Ignore PE parsing errors
+                                            if pe_name: 
+                                                break
+                                    if pe_name:
+                                        break
+                            pe.close()
+                        except Exception:
+                            pass # Ignore PE parsing errors
 
-                            if pe_name:
-                                os.rename(plugin_tempname, pe_name) # Rename file to original name
-                                plugin_tempname = pe_name # Update temp name
-                                
-                            print(f"Plugin saved: {plugin_tempname}") # Notify user
+                        if pe_name:
+                            if os.path.exists(pe_name):
+                                os.remove(pe_name) # Remove existing file
+                            os.rename(plugin_tempname, pe_name) # Rename file to original name
+                            plugin_tempname = pe_name # Update temp name
+                            
+                        print(f"Plugin saved: {plugin_tempname}") # Notify user
 
             except Exception as e:
                 print(f"Error receiving data: {e}")
                 break
 
 if __name__ == "__main__":
-    Receive.main() # Run the main function
+    Receive.main() # Run the main function 
