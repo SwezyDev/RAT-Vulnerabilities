@@ -35,7 +35,6 @@ class ReceiveUtils:
 
     def decompress(input_bytes: bytes) -> bytes:
         with io.BytesIO(input_bytes) as memory_stream: # Create memory stream
-            # note: original code read 4 bytes length then used gzip; keep behaviour
             try:
                 original_len = int.from_bytes(memory_stream.read(4), "little") # Read original length
             except Exception:
