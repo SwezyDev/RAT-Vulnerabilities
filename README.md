@@ -73,7 +73,7 @@ This project is explicitly for **legitimate security research**:
 
 ```/
 ├─ .github/ ➔ Contains GitHub issue templates
-│ └─ ISSUE_TEMPLATE/ ➔  GitHub issue templates
+│ └─ ISSUE_TEMPLATE/ ➔ GitHub issue templates
 │   ├─ bug_report.md ➔ For reporting bugs
 │   └─ feature_request.md ➔ For suggesting new features
 ├─ XWorm/ ➔ XWorm specific PoCs and writeups
