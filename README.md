@@ -87,7 +87,8 @@ This project is explicitly for **legitimate security research**:
 │ ├─ rce_exploit.py ➔ Run remote code execution on attacker's machine
 │ ├─ reverse_shell.py ➔ Launch a remote shell on attacker's machine
 │ ├─ sniffer.py ➔ Sniff request from the attacker's server and decrypt the Payload
-│ └─ webcam_spoofing.py # Show a custom Picture/Video/Gif on attacker's machine
+│ └─ webcam_spoofing.py ➔ Show a custom Picture/Video/Gif on attacker's machine
+├─ .gitignore ➔ Lists files and directories Git should ignore
 ├─ LICENSE ➔ License file
 └─ README.md ➔ Read me file
 ```
