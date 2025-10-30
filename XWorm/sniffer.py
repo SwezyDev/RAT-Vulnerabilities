@@ -1,12 +1,16 @@
-
 from Crypto.Util.Padding import unpad, pad
 from Crypto.Cipher import AES
 from datetime import datetime
 import hashlib
+import pefile
+import base64
 import random
 import string
 import socket
+import time
+import gzip
 import os
+import io
 
 class ReceiveUtils:
     def aes_decryptor(input_bytes, key):
@@ -28,6 +32,18 @@ class ReceiveUtils:
         encrypted = ReceiveUtils.aes_encryptor(text.encode(), key) # Encrypt the text
         header = (str(len(encrypted)) + "\0").encode() # Create header with length
         sock.sendall(header + encrypted) # Send header and encrypted data
+
+    def decompress(input_bytes: bytes) -> bytes:
+        with io.BytesIO(input_bytes) as memory_stream: # Create memory stream
+            original_len = int.from_bytes(memory_stream.read(4), "little") # Read original length
+
+            with gzip.GzipFile(fileobj=memory_stream, mode="rb") as gzip_file: # Create gzip file
+                decompressed_data = gzip_file.read(original_len) # Read decompressed data
+
+            return decompressed_data # Return decompressed bytes
+
+    def decode_key(key):
+        return key.decode(errors="ignore") if isinstance(key, bytes) else key # Decode key if bytes
 
     def generate_hex_string(length=20):
         hex_chars = string.hexdigits.upper()[:16] # Hexadecimal characters
@@ -153,8 +169,10 @@ class Receive:
         port = input("Port > ") # Get target port
         key = input("Key > ") # Get encryption key
         sock = Receive.connection(host, port) # Connect to target
-
-
+        dump = input("Dump Plugins - DLLs? (y/n) > ").lower() # Ask to dump existing clients
+        if not dump in ["y", "n"]: # Validate input
+            print("Invalid input. Please enter 'y' or 'n'.") 
+            return # Exit if invalid
 
         payload = ("INFO" + Receive.SPL_XCLIENT +
                     ReceiveUtils.generate_hex_string() + Receive.SPL_XCLIENT +
@@ -177,7 +195,7 @@ class Receive:
         ReceiveUtils.send_encrypted(sock, payload, key) # Send encrypted message
         ReceiveUtils.send_encrypted(sock, payload2, key) # Send encrypted message
 
-        Receive.receive(sock, key) # Start receiving
+        Receive.receive(sock, key, dump) # Start receiving
 
 
     def connection(host, port):
@@ -190,7 +208,7 @@ class Receive:
             print(f"Connection failed: {e}")
             os._exit(0) # Exit on failure
 
-    def receive(sock, key):
+    def receive(sock, key, dump):
         buffer = b"" # Initialize empty buffer
         while True:
             try:
@@ -209,8 +227,62 @@ class Receive:
                 if decrypted.startswith(f"plugin{Receive.SPL_XCLIENT}"): # Handle plugin data
                     plugin_data = decrypted.split(Receive.SPL_XCLIENT, 1)[-1] # Extract plugin data
                     ReceiveUtils.send_encrypted(sock, f"sendPlugin{Receive.SPL_XCLIENT}{plugin_data}", key) # Acknowledge plugin receipt
+                
+                print(f"Received: {decrypted}") # Print the decrypted message
 
-                print(f"Received: {decrypted}")
+                if dump == "y": # If dumping is enabled
+                    if decrypted.startswith(f"savePlugin{Receive.SPL_XCLIENT}"): # Handle save plugin command
+                        plugin_info = decrypted.split(Receive.SPL_XCLIENT, 2) # Split the command
+                        if len(plugin_info) >= 3:
+                            plugin_tempname = f"plugin_{random.randint(1000,9999)}.dll" # Create unique plugin name
+                            b64_payload = plugin_info[2]
+
+                            try:
+                                raw = base64.b64decode(b64_payload, validate=True) # Try to decode Base64
+                            except Exception as e: 
+                                print(f"Base64 decode failed: {e}")
+                                try:
+                                    raw = base64.b64decode(b64_payload + "===") # Try to fix padding and decode
+                                except Exception as e:
+                                    print(f"Base64 decode with padding failed: {e}")
+                                    return # Exit if decoding fails
+                                
+                            decompressed = ReceiveUtils.decompress(raw) # Decompress the data
+
+                            with open(plugin_tempname, "wb") as f: # Save the plugin
+                                f.write(decompressed) # Write to file
+
+                            pe_name = None # Initialize pe name
+                            try:
+                                pe = pefile.PE(plugin_tempname) # Parse PE file
+                                if hasattr(pe, 'FileInfo') and pe.FileInfo: # Check for FileInfo
+                                    stack = list(pe.FileInfo) # Initialize stack
+                                    while stack: # Traverse FileInfo
+                                        item = stack.pop() # Pop item from stack
+                                        if isinstance(item, (list, tuple)): # If item is a list or tuple
+                                            stack.extend(item) # Extend stack
+                                            continue # Continue to next iteration
+                                        key = getattr(item, 'Key', None) # Get Key attribute
+                                        if key and ReceiveUtils.decode_key(key) == 'StringFileInfo': # Check for StringFileInfo
+                                            for st in getattr(item, 'StringTable', []) or []: # Iterate over StringTable
+                                                entries = getattr(st, 'entries', {}) or {} # Get entries
+                                                for key, value in entries.items(): # Iterate over entries
+                                                    if ReceiveUtils.decode_key(key) == 'OriginalFilename': # Check for OriginalFilename
+                                                        pe_name = value.decode(errors="ignore") if isinstance(value, bytes) else value # Decode value
+                                                        break
+                                                if pe_name: 
+                                                    break
+                                        if pe_name:
+                                            break
+                                pe.close()
+                            except Exception:
+                                pass # Ignore PE parsing errors
+
+                            if pe_name:
+                                os.rename(plugin_tempname, pe_name) # Rename file to original name
+                                plugin_tempname = pe_name # Update temp name
+                                
+                            print(f"Plugin saved: {plugin_tempname}") # Notify user
 
             except Exception as e:
                 print(f"Error receiving data: {e}")
