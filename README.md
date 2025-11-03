@@ -78,6 +78,7 @@ This project is explicitly for **legitimate security research**:
 │   └─ feature_request.md ➔ For suggesting new features
 ├─ XWorm/ ➔ XWorm specific PoCs and writeups
 │ ├─ README.md ➔ Show a detailed version of this and description of the Scripts
+│ ├─ auto_exploiter.py ➔ Exploit (RCE) mutiple C2s fast with your own Payload
 │ ├─ create_text.py ➔ Create a text on attacker's machine
 │ ├─ decrypt_payload.py ➔ Get all Information about the Client
 │ ├─ flood_errors.py ➔ Flood attacker's server with errors
