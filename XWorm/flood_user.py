@@ -1,6 +1,7 @@
 
 from Crypto.Util.Padding import pad
 from Crypto.Cipher import AES
+import argparse
 import hashlib
 import socket
 import os
@@ -22,9 +23,24 @@ class FloodUser:
 
     @staticmethod
     def main():
-        host = input("Host > ") # Get target host
-        port = input("Port > ") # Get target port
-        key = input("Key > ") # Get encryption key
+        parser = argparse.ArgumentParser(add_help=False)
+        parser.add_argument("--h", "--host", dest="host", nargs="?", help="Target host") # Target host
+        parser.add_argument("--p", "--port", dest="port", nargs="?", help="Target port") # Target port
+        parser.add_argument("--k", "--key", dest="key", nargs="?", help="Encryption key") # Encryption key
+        parser.add_argument("--help", action="store_true", dest="help_flag", help="Show this help message and exit") # Help flag
+
+        args, unknown = parser.parse_known_args() # Parse known args only
+ 
+        if args.help_flag:
+            parser.print_help() # Show help message
+            return # Exit after showing help
+
+        host = args.host if args.host else input("Host > ") # Get target host
+        port = args.port if args.port else input("Port > ") # Get target port
+        key = args.key if args.key else input("Key > ") # Get encryption key
+
+        port = int(port) if str(port).isdigit() else input("Port > ") # Ensure port is an integer
+
         sock = FloodUser.connection(host, port) # Connect to target
         FloodUser.trigger(sock, key) # Trigger the User
 
