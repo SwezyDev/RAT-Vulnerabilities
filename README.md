@@ -4,6 +4,8 @@
   <a href="https://www.python.org" target="_blank"><img src="https://img.shields.io/badge/Language-Python-blue?style=for-the-badge&logo=python" /></a>
   <a href="https://t.me/swezy" target="_blank"><img src="https://img.shields.io/badge/Telegram-@Swezy-blue?style=for-the-badge&logo=telegram" /></a>
   <br>
+  <a href="https://x.com/UNP4CK/status/1917297281323200765"><img src="https://img.shields.io/badge/X Post-Click here to view-white?style=for-the-badge" /></a>
+  <br />
   <code>Leave a ⭐ if you like this Repository</code>
 </p>
 
