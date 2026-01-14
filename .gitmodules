@@ -1,0 +1,3 @@
+[submodule "XWorm/path-traversal"]
+	path = XWorm/path-traversal
+	url = https://github.com/arch1m3d/xworm-c2-path-traversal
