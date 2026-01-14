@@ -20,6 +20,7 @@
 | **live_chat_v2.py**         | Talk with the attacker live (send and receiver)                  |                                | [@SwezyDev](https://github.com/SwezyDev) |
 | **microphone_spoofing.py**  | Play an audio on attacker's machine                              |                                | [@SwezyDev](https://github.com/SwezyDev) |
 | **monitor_spoofing.py**     | Show a custom Picture/Video/Gif on attacker's machine            |                                | [@SwezyDev](https://github.com/SwezyDev) |
+| **path-traversal**          | Path Traversal exploit to manipulate file paths                  |                                | [@arch1m3d](https://github.com/arch1m3d) |
 | **rce_exploit.py**          | Run remote code execution on attacker's machine                  | Stopped working at version 6.0 | [@SwezyDev](https://github.com/SwezyDev) |
 | **reverse_shell.py**        | Launch a remote shell on attacker's machine                      | Stopped working at version 6.0 | [@SwezyDev](https://github.com/SwezyDev) |
 | **sniffer.py**              | Sniff request from the attacker's server and decrypt the Payload |                                | [@SwezyDev](https://github.com/SwezyDev) |
