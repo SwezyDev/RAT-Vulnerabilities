@@ -9,7 +9,7 @@
 
 | File                        | Description                                                      | Note                           | Developer                                |
 |-----------------------------|------------------------------------------------------------------|--------------------------------|------------------------------------------|
-| **auto_exploiter.py**       | Exploit (RCE) mutiple C2s fast with your own Payload             | Stopped working at version 6.0 | [@SwezyDev](https://github.com/SwezyDev) |
+| **auto_exploiter.py**       | Exploit (RCE) multiple C2s fast with your own Payload            | Stopped working at version 6.0 | [@SwezyDev](https://github.com/SwezyDev) |
 | **create_text.py**          | Create a text on attacker's machine                              |                                | [@SwezyDev](https://github.com/SwezyDev) |
 | **decrypt_payload.py**      | Get all Information about the Client                             |                                | [@SwezyDev](https://github.com/SwezyDev) |
 | **flood_errors.py**         | Flood attacker's server with errors                              |                                | [@SwezyDev](https://github.com/SwezyDev) |
